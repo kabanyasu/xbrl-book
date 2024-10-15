@@ -35,7 +35,7 @@ XBRLの特徴として**タクソノミ**と**インスタンス**という二�
 タクソノミとインスタンスを一言で表すと、
 **タクソノミはひな型**、**インスタンスはその中身のデータ**といったイメージです。
 
-!https://onto-logy.com/wp/wp-content/uploads/2024/07/ac21eec990f459cf7db7b7ba8a6a0fec.png
+![alt text](images/0101_タクソノミとインスタンス.png)
 
 画像１
 
@@ -61,7 +61,7 @@ XBRLにおけるインスタンスは、タクソノミで定義したひな型�
 
 以下の画像を参照して実際にどうインスタンスが入っているかのイメージをつけてもらいます。
 
-!https://onto-logy.com/wp/wp-content/uploads/2024/07/baffc4b50279332a29093c3c32f089a9.png
+![alt text](images/0102_インスタンスの例.png)
 
 画像２
 
@@ -131,7 +131,7 @@ XBRLはタクソノミでタグを指定することにより、
 
 ご想像の通り、これでは時間もかかるのにミスが生じやすく、確認作業の負担も大きくなってしまいます。このような状況ですと分析どころではありません。
 
-!https://onto-logy.com/wp/wp-content/uploads/2024/07/41eb289c5c20b39c22919213991cc76f.png
+![alt text](images/0103_XBRLのメリット1.png)
 
 画像３*³
 
@@ -139,7 +139,7 @@ XBRLはタクソノミでタグを指定することにより、
 
 これにより、迅速に情報を加工・分析することが用意となりました。
 
-!https://onto-logy.com/wp/wp-content/uploads/2024/07/2e9c335f341498a6e5a614c05a0e7683.png
+![alt text](images/0104_XBRLのメリット2.png)
 
 画像４*³
 
@@ -170,7 +170,7 @@ XBRLはタクソノミでタグを指定することにより、
 これにより、開示情報としての価値が格段に向上します。
 
 
-!https://onto-logy.com/wp/wp-content/uploads/2024/07/4098132bdc46318f025cf0296123a4aa.png
+![alt text](images/0105_出力形式の自動変換.png)
 
 画像５*³
 
