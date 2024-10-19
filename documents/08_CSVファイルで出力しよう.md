@@ -1,6 +1,7 @@
 # 本章の目的
 
-本章では、前章までで集めた個々のデータをまとめてCSVファイルで出力します。いちいちコードを回さなくても一度回してしまえばだれでもその取得したデータを参照できるようになります。一つの成果物を出力することでXBRLを使えるようになりましょう。
+本章では、前章までで集めた個々のデータをまとめてCSVファイルで出力する方法を解説します。
+CSVファイルでデータをダウンロードすれば、XBRLからデータを都度ダウンロードしなくても、ExcelやPythonなどを用いてEDINETから出力したデータを参照できるようになります。
 
 今回は、今まで取得してきたデータに「業種」を加えた以下の6項目をカラムに設定します。
 
@@ -50,7 +51,7 @@ for fact in model_xbrl.facts:
             # BeautifulSoupを使ってHTMLタグを除去
             soup = BeautifulSoup(raw_risk, "html.parser")
             company_data["事業等のリスク"] = re.sub(r'\s', '', soup.get_text()).strip()
-            
+
 
 # 監査データからKAMを探して取得
 for fact in model_audit.facts:
@@ -60,7 +61,7 @@ for fact in model_audit.facts:
             # BeautifulSoupを使ってHTMLタグを除去
             soup = BeautifulSoup(raw_kam, "html.parser")
             company_data["KAM"] = re.sub(r'\s', '', soup.get_text()).strip()
-                
+
 
 # 見つけたデータをリストに入れる
 edinet_company_info_list.append(list(company_data.values()))
@@ -70,7 +71,7 @@ edinet_company_info_list.append(list(company_data.values()))
 
 次に業種のデータを取得しましょう。
 
-そもそもXBRLファイルの中に業種のデータはありません。そのため、EDINETが用意してくれているEDINETコードリストを使用します。EDINETコードリストの中にはEDINETコードと業種のデータが紐づいているのでそこからデータを取得します。
+XBRLファイルの中には業種のデータはありません。そのため、EDINETが用意してくれているEDINETコードリスト利用して業種データを取得していきましょう。EDINETコードリストの中にはEDINETコードと業種のデータが紐づいているのでそこからデータを取得します。
 
 まずEDIENTを開き、上部のタブから「EDIENTタクソノミ及びコードリスト　ダウンロード」という一番右のタブを開きます。
 
@@ -87,9 +88,9 @@ def main():
     # EDINETコードリストを追加
     edinetcodedlinfo_filepath = r'C:\Users\ユーザー名\Downloads\Edinetcode_20241007\EdinetcodeDlInfo.csv'
     edinet_info_list = make_edinet_info_list(edinetcodedlinfo_filepath)
-    
+
     # (ここに有報と監査報告書のXBRLファイルのパスを指定)
-    
+
     edinet_company_info_list = make_edinet_company_info_list(xbrl_files, edinet_info_list, audit_files)
 ```
 
@@ -136,10 +137,10 @@ import pandas as pd
 def write_csv(edinet_company_info_list):
 		xbrl_frame = pd.DataFrame(edinet_company_info_list,
 		                 columns=['EDINETCODE', '企業名', '業種', '営業利益(IFRS)(円)', '事業等のリスク', 'KAM'])
-		
+
 		# EDINETコードでソート
 		xbrl_frame_sorted = xbrl_frame.sort_values(by='EDINETCODE', ascending=True)
-		
+
 		# CSVファイルで出力
 		xbrl_frame_sorted.to_csv("xbrl_book.csv", encoding='utf-8-sig', index=False)
 ```
@@ -150,7 +151,8 @@ def write_csv(edinet_company_info_list):
 
 最後にエラーハンドリングを追加しておきます。
 
-エラーハンドリングとは、どこでどんなエラーが起きているのかわかるようにしておくことです。今回のような少し処理に時間がかかる規模が大きめのコードを回す際にはエラーハンドリングを追加していないとコード自体に問題があるのかデータ自体に問題があるのか、またどういったところを修正すればいいのかなどがわかりません。そうすると、まったく違うところを修正し、ずっと元の問題は解決されないまま、といったことが起きてしまいます。様々な処理をするコードを書く場合はエラーハンドリングを追加することは必須となってきます。
+エラーハンドリングとは、どこで何のエラーが起きているのかわかるようにしておくことです。
+今回のような少し処理に時間がかかる規模が大きめのコードを回す際にエラーハンドリングを追加していないと、コード自体に問題があるのかデータ自体に問題があるのか、またどういったところを修正すればいいのかなどが不明瞭になります。そうすると、まったく違うところを修正し、ずっと元の問題は解決されないまま、といったことが起きてしまいます。様々な処理をするコードを書く場合はエラーハンドリングを追加することは必須となってきます。
 
 エラーハンドリングを追加するには以下のような書き方をします。
 
@@ -188,7 +190,7 @@ def make_edinet_info_list(edinetcodedlinfo_filepath):
         edinet_info = edinet_info[["ＥＤＩＮＥＴコード", "提出者業種"]]
         edinet_info_list = edinet_info.values.tolist()
         return edinet_info_list
-    
+
     except Exception as e:
         print(f"EDINET情報の取得に失敗しました: {e}")
         return []
@@ -204,14 +206,14 @@ def make_edinet_company_info_list(xbrl_files, edinet_info_list, audit_files):
             "事業等のリスク": None,
             "KAM": None,
         }
-        
+
         try:
             ctrl = Cntlr.Cntlr()
             model_manager = ModelManager.initialize(ctrl)
             model_xbrl = model_manager.load(xbrl_file)
             model_audit = model_manager.load(audit_file)
             print("XBRLファイルを読み込んでいます", ":", index + 1, "/", len(xbrl_files))
-            
+
         except Exception as e:
             print(f"XBRLファイルの読み込みに失敗しました ({xbrl_file} または {audit_file}): {e}")
             edinet_company_info_list.append(list(company_data.values()))
@@ -246,7 +248,7 @@ def make_edinet_company_info_list(xbrl_files, edinet_info_list, audit_files):
                         # BeautifulSoupを使ってHTMLタグを除去
                         soup = BeautifulSoup(raw_risk, "html.parser")
                         company_data["事業等のリスク"] = re.sub(r'\s', '', soup.get_text()).strip()
-                        
+
         except Exception as e:
             print(f"有報の解析中にエラーが発生しました ({xbrl_file}): {e}")
 
@@ -259,13 +261,13 @@ def make_edinet_company_info_list(xbrl_files, edinet_info_list, audit_files):
                         # BeautifulSoupを使ってHTMLタグを除去
                         soup = BeautifulSoup(raw_kam, "html.parser")
                         company_data["KAM"] = re.sub(r'\s', '', soup.get_text()).strip()
-                        
+
         except Exception as e:
             print(f"監査報告書の解析中にエラーが発生しました ({audit_file}): {e}")
 
         # 見つけたデータをリストに入れる
         edinet_company_info_list.append(list(company_data.values()))
-        
+
     return edinet_company_info_list
 
 def write_csv(edinet_company_info_list):
@@ -275,7 +277,7 @@ def write_csv(edinet_company_info_list):
 
         # EDINETコードでソート
         xbrl_frame_sorted = xbrl_frame.sort_values(by='EDINETCODE', ascending=True)
-				
+
 				# CSVファイルで出力する
         xbrl_frame_sorted.to_csv("xbrl_book.csv", encoding='utf-8-sig', index=False)
     except Exception as e:
@@ -285,12 +287,12 @@ def main():
     # EDINETコードリストを追加
     edinetcodedlinfo_filepath = r'C:\Users\ユーザー名\Downloads\Edinetcode_20241007\EdinetcodeDlInfo.csv'
     edinet_info_list = make_edinet_info_list(edinetcodedlinfo_filepath)
-    
+
     xbrl_files = glob.glob(r'*xbrl_zip\*\XBRL\PublicDoc\*.xbrl')
     audit_files = glob.glob(r'*xbrl_zip\*\XBRL\AuditDoc\*aai*.xbrl')
-    
+
     edinet_company_info_list = make_edinet_company_info_list(xbrl_files, edinet_info_list, audit_files)
-    
+
     write_csv(edinet_company_info_list)
     print("extract finish")
 
