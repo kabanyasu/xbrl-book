@@ -131,8 +131,6 @@ https://api.edinet-fsa.go.jp/api/auth/index.aspx?mode=1
 
 SMSか電話にて受け取った確認コードを入力するとAPIキー発行画面が表示されアカウント作成が完了となります。
 
-@<embed>{|html|<img width=300 alt="多要素認証確認コードを入力" src="images\0315_多要素認証確認コード.png">}
-
 //image[0315_多要素認証確認コード][多要素認証確認コードを入力][scale=0.5]{
 //}
 
