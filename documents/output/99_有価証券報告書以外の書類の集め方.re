@@ -20,8 +20,14 @@ EDINET API仕様書(version2)を参照して、内閣府令に対応したordina
 
 以上を適切に施託することで有価証券報告書以外の書類もダウンロードすることができます。
 
-@<icon>{99_内閣府令コード}引用：EDINET API仕様書（version2）p85
+//image[99_内閣府令コード][内閣府令コード][scale=0.6]{
+//}
 
-@<icon>{99_formコード}引用：https://www.fsa.go.jp/search/20231211.htmlよりタクソノミ要素リスト.xlsx
+引用：EDINET API仕様書（version2）p85
+
+//image[99_formコード][formコード][scale=0.6]{
+//}
+
+引用：https://www.fsa.go.jp/search/20231211.htmlよりタクソノミ要素リスト.xlsx
 
 書類が異なれば記述される内容も異なります。同じようにタクソノミも異なるため、注意が必要です。
