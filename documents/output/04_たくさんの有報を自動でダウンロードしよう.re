@@ -12,7 +12,7 @@
 
 まず、完成形のコードが以下になります。
 
-//emlist[][python]{
+//emlist[41][python]{
 import requests
 import datetime
 import os
@@ -181,7 +181,7 @@ main関数の中で日付のリストを作成します。 そのリストに入
 
 あまりに長いとサーバーに負担をかけてしまい、時間がかかるだけでなくエラーになってしまう場合もあるため、1ヵ月単位などで取って来ることをオススメします。 また、6月は前年度の有報の提出期限であるため提出数が特に多く、細かく指定するなどの対処が必要な月です。
 
-//emlist[][python]{
+//emlist[42][python]{
 start_date = datetime.date(2024, 5, 1) # 開始日付　随時変更
 end_date = datetime.date(2024, 5, 31) # 終了日付　随時変更
 day_list = make_day_list(start_date, end_date)
@@ -191,7 +191,7 @@ day_list = make_day_list(start_date, end_date)
 
 download_xbrl_in_zip関数のsave_dirで保存先の指定をしてください。
 
-//emlist[][python]{
+//emlist[43][python]{
 def download_xbrl_in_zip(securities_report_doc_list, number_of_lists):
     # ダウンロードする有報を保存しておく場所を指定。もしなければフォルダを作成する。
     save_dir = "/path/to/download/directory/" # あなたの保存先のパスに変更してください。
@@ -203,7 +203,7 @@ make_doc_id_list関数とdownload_xbrl_in_zip関数の2つの関数の中のpara
 
 以下コードでは「””」で囲まれたyour_subscription_keyの部分をご自身のAPIキーに変更して下さい。
 
-//emlist[][python]{
+//emlist[44][python]{
 def make_doc_id_list(day_list):
     securities_report_doc_list = []
     for index, day in enumerate(day_list):
@@ -215,7 +215,7 @@ def make_doc_id_list(day_list):
                 }
 //}
 
-//emlist[][python]{
+//emlist[45][python]{
 for index, doc_id in enumerate(securities_report_doc_list):
         print(doc_id, ":", index + 1, "/", number_of_lists)
         url =f"https://disclosure.edinet-fsa.go.jp/api/v2/documents/{doc_id}"
@@ -238,7 +238,7 @@ make_doc_id_list関数では、各日付についてEDINET APIを呼び出し、
 
 docInfoEditStatusは書類情報修正区分を示すものであり、財務局員が書類を修正した場合に修正前の書類にはこの書類情報修正区分の数値に2が割り当てられます。最新の書類を取得したいためdocInfoEditStatus !=2で修正前の書類を取得せずに処理を行うようにしています。該当した提出書類のDocID（書類管理番号）を取得し、securities_report_doc_list（有報のリスト）に格納します。
 
-//emlist[][python]{
+//emlist[46][python]{
 def make_doc_id_list(day_list):
     securities_report_doc_list = []
     for index, day in enumerate(day_list):
@@ -264,7 +264,7 @@ def make_doc_id_list(day_list):
 
 download_xbrl_in_zip関数では各ドキュメントIDについてAPIを呼び出しXBRLファイルをZIP形式で指定された場所にダウンロードします。 paramsの”type”は取得情報の指定をしており、１はメタデータのみを取得するものです。つまり、提出された書類の本文と監査報告書を取得することができます。resのステータスコードが200はリクエスト成功を意味し、成功したもののみXBRLファイルをダウンロードしています。このダウンロード時に各ファイルはZIP形式で保存され、ファイル名はドキュメントIDになります。
 
-//emlist[][python]{
+//emlist[47][python]{
 def download_xbrl_in_zip(securities_report_doc_list, number_of_lists):
         # ▼ダウンロードする有報を保存しておく場所を指定。もしなければフォルダを作成する。
     save_dir = "/path/to/download/directory/"# あなたの保存先のパスに変更してください。
