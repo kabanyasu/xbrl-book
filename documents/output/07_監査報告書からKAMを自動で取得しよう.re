@@ -117,7 +117,7 @@ EDINETからダウンロードした監査報告書のファイル名には略�
 
 aaiがある場所は AuditDoc と .xbrl の間です。正規表現を用いてここにaaiが載っているファイルを指定し過不足なくデータを取得できます。指定ができたらcompany_infoに両方のファイルを入れます。
 
-//emlist[][python]{
+//emlist[71][python]{
 def main():
     xbrl_files = glob.glob(r'*フォルダ名\*\XBRL\PublicDoc\*.xbrl')
     audit_files = glob.glob(r'*フォルダ名\*\XBRL\AuditDoc\*aai*.xbrl')
@@ -127,7 +127,7 @@ def main():
 
 ファイルを読み込む部分でもaudit_filesを読み込みます。zipを使用し、有報のデータと監査報告書のデータが一組にします。
 
-//emlist[][python]{
+//emlist[72][python]{
 for index, (xbrl_file, audit_file) in enumerate(zip(xbrl_files, audit_files)):
         company_data = {
             "EDINETCODE": "",
@@ -147,7 +147,7 @@ if文の中でタクソノミを指定します。KAMはテキストデータで
 
 データは最後にリストで保管します。最後に保管せずにEDIENTコードと企業名を見つけた段階でリストに入れてしまうと別のリストとして保管してしまいます。別のリストで保管すると、企業名とKAMが別々になり思うように利用できないデータになってしまう可能性があります。
 
-//emlist[][python]{
+//emlist[73][python]{
 # 監査データからKAMを探して取得
 for fact in model_audit.facts:
 
@@ -175,7 +175,7 @@ for fact in model_audit.facts:
 
 === ソースコード
 
-//emlist[][python]{
+//emlist[74][python]{
 from arelle import ModelManager
 from arelle import Cntlr
 import os

@@ -20,7 +20,7 @@
 
 検索をかけ、ハイライトされている前後を確認すると以下のような部分が見つかると思います。
 
-//emlist[][python]{
+//emlist[code61][python]{
 <jpcrp_cor:BusinessRisksTextBlock contextRef="FilingDateInstant">&lt;p style="page-break-before:always; line-height:0.75pt; width:100%; font-size:0.75pt;"&gt; &lt;/p&gt;
 &lt;h3 class="smt_head2" style="font-family:&amp;apos;ＭＳ ゴシック&amp;apos;;"&gt;３ 【事業等のリスク】～（省略）
 //}
@@ -39,7 +39,7 @@
 
 タグの方はタクソノミを調べたもののうち「：」以降の「BusinessRiskTextBlock」のみを指定します。
 
-//emlist[][python]{
+//emlist[code62][python]{
 if fact.concept.qname.localName == 'BusinessRisksTextBlock':
 　　　　if fact.contextID == 'FilingDateInstant':
        company_data["事業等のリスク"] = fact.value
@@ -53,7 +53,7 @@ reモジュールは書類ごとで空白や改行の量が違うこともある
 
 これらどちらか片方のみを使用しても似たようなことはできます。しかし、BeautifulSoupだけだと空白や改行がたくさん残ってしまう、reモジュールだけではBeautifulSoupほど高精度でタグやネストを処理できないといった問題が残ってしまいます。両者のライブラリを利用することで双方の弱点を補完し、綺麗に文章を取得することが可能になります。
 
-//emlist[][python]{
+//emlist[code63][python]{
 # BeautifulSoupを使ってHTMLタグを除去
 soup = BeautifulSoup(company_data["事業等のリスク"], "html.parser")
 company_data["事業等のリスク"] = soup.get_text()
@@ -64,7 +64,7 @@ company_data["事業等のリスク"] = re.sub(r'\s', '', company_data["事業�
 
 ▼ソースコード
 
-//emlist[][python]{
+//emlist[64][python]{
 from arelle import ModelManager
 from arelle import Cntlr
 import os

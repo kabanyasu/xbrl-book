@@ -26,7 +26,7 @@
 
 前章までで取得できた項目を1つのコードにまとめます。
 
-//emlist[][python]{
+//emlist[81][python]{
 # 実データを探して取得
 for fact in model_xbrl.facts:
     # EDINETコードを探す
@@ -81,7 +81,7 @@ EDIENTのホーム画面より上部のタブから「EDIENTタクソノミ及�
 
 次にEDIENTコードリストを参照できるようにパスを通します。
 
-//emlist[][python]{
+//emlist[82][python]{
 def main():
     # EDINETコードリストを追加
     edinetcodedlinfo_filepath = r'C:\Users\ユーザー名\Downloads\Edinetcode_20241007\EdinetcodeDlInfo.csv'
@@ -94,7 +94,7 @@ def main():
 
 データを探すコードでEDINETコードを取得する部分に業種を取得するコードを付け足します。
 
-//emlist[][python]{
+//emlist[83][python]{
 # EDINETコードを探す
 if fact.concept.qname.localName == 'EDINETCodeDEI':
     company_data["EDINETCODE"] = fact.value
@@ -108,7 +108,7 @@ if fact.concept.qname.localName == 'EDINETCodeDEI':
 
 さらにEDINETコードと業種のデータを紐づける関数を作成します。
 
-//emlist[][python]{
+//emlist[84][python]{
 def make_edinet_info_list(edinetcodedlinfo_filepath):
         edinet_info = pd.read_csv(edinetcodedlinfo_filepath, skiprows=1, encoding='cp932')
         edinet_info = edinet_info[["ＥＤＩＮＥＴコード", "提出者業種"]]
@@ -124,7 +124,7 @@ write_csv()関数を作り、CSVファイルで出力します。CSVで出力す
 
 次に今回はEDINETコードが小さい順にソートし、encodingを指定して文字化けを防ぎます。今回はBOM付きのUTF-8である「UTF-8-sig」を指定しました。最後に「xbrl_book.csv」というファイル名で出力します。
 
-//emlist[][python]{
+//emlist[85][python]{
 # インポート
 import pandas as pd
 
@@ -145,7 +145,7 @@ def write_csv(edinet_company_info_list):
 
 最後にエラーハンドリングを追加します。エラーハンドリングとは、どこで何のエラーが起きているのかわかるようにしておくことです。エラーハンドリングを追加しておくと、コード自体に問題があるのかデータ自体に問題があるのか、またどういったところを修正すればいいのかなどがわかります。様々な処理をするコードを書く場合はエラーハンドリングを追加することは必須となってきます。
 
-//emlist[][python]{
+//emlist[86][python]{
 try:
     (処理)
 except Exception as e:
@@ -162,7 +162,7 @@ except Exception as e:
 
 === ソースコード
 
-//emlist[][python]{
+//emlist[87][python]{
 from arelle import ModelManager
 from arelle import Cntlr
 import os
