@@ -60,16 +60,16 @@ KAMは財務情報などと比べると参照されるケースは少ないで�
 
 https://www.fsa.go.jp/search/20231211/1e_ElementList.xlsx
 
-1. 目次から「9 企業内容等の開示に関する内閣府令 第三号様式 有価証券報告書(jpcrp03000-asr)」のシートを選択
+（1）目次から「9 企業内容等の開示に関する内閣府令 第三号様式 有価証券報告書(jpcrp03000-asr)」のシートを選択
 
    ![タクソノミ要素リスト目次](images\0704_タクソノミ要素リストの目次.png)
 
-2. 「Ctrl」＋「F」で検索窓から「監査上の主要な検討事項」と検索
-3. 「詳細ツリー‐標準ラベル（日本語）」（B列）でヒットするものを探す
+（2）「Ctrl」＋「F」で検索窓から「監査上の主要な検討事項」と検索
+（3）「詳細ツリー‐標準ラベル（日本語）」（B列）でヒットするものを探す
 
    ![タクソノミ要素リスト内で検索](images\0705_タクソノミ要素リスト内で目的の項目を検索.png)
 
-4. 「冗長ラベル（日本語）」（C列）で連結のものと個別のものが分かれていることが確認できるため連結のものの「要素名」（I列）を確認
+（4）「冗長ラベル（日本語）」（C列）で連結のものと個別のものが分かれていることが確認できるため連結のものの「要素名」（I列）を確認
 
    ![タクソノミ要素リストから参照](images\0706_タクソノミ要素リストの中から参照する.png)
 
@@ -115,8 +115,8 @@ aaiがある場所は AuditDoc と .xbrl の間です。正規表現を用いて
 
 ```python
 def main():
-    xbrl_files = glob.glob(r'*xbrl_zip\*\XBRL\PublicDoc\*.xbrl')
-    audit_files = glob.glob(r'*xbrl_zip\*\XBRL\AuditDoc\*aai*.xbrl')
+    xbrl_files = glob.glob(r'*フォルダ名\*\XBRL\PublicDoc\*.xbrl')
+    audit_files = glob.glob(r'*フォルダ名\*\XBRL\AuditDoc\*aai*.xbrl')
 
     company_info = make_edinet_company_info_list(xbrl_files, audit_files)
 ```
@@ -142,7 +142,7 @@ EDIENTコードと企業名は有報から取得し、KAMは監査報告書か�
 
 if文の中でタクソノミを指定します。KAMはテキストデータであるためデータクレンジングをします。
 
-データをリストには最後に入れます。最後に入れずにEDIENTコードと企業名を見つけた段階でリストに入れてもらうと別のリストとして保管してしまいます。別のリストで保管すると、企業名とKAMが別々になり思うように利用できないデータになってしまう可能性があります。
+データは最後にリストで保管します。最後に保管せずにEDIENTコードと企業名を見つけた段階でリストに入れてしまうと別のリストとして保管してしまいます。別のリストで保管すると、企業名とKAMが別々になり思うように利用できないデータになってしまう可能性があります。
 
 ```python
 # 監査データからKAMを探して取得
@@ -232,8 +232,8 @@ def make_edinet_company_info_list(xbrl_files, audit_files):
     return edinet_company_info_list
 
 def main():
-    xbrl_files = glob.glob(r'*xbrl_zip\*\XBRL\PublicDoc\*.xbrl')
-    audit_files = glob.glob(r'*xbrl_zip\*\XBRL\\AuditDoc\*aai*.xbrl')
+    xbrl_files = glob.glob(r'*フォルダ名\*\XBRL\PublicDoc\*.xbrl')
+    audit_files = glob.glob(r'*フォルダ名\*\XBRL\\AuditDoc\*aai*.xbrl')
 
     company_info = make_edinet_company_info_list(xbrl_files, audit_files)
     for info in company_info:
